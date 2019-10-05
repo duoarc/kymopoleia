@@ -30,7 +30,7 @@
     $_SESSION['Amount'] = $Budget['Amount'];
 
 
-    // $addExpenseSQL = "ALTER BudgetDetails ADD Expense int(255)";
+    // $addExpenseSQL = "UPDATE BudgetDetails SET expense = $expense WHERE Budget_id = '{$_SESSION['Budget_id']}'";
     // $addExpenseResult = $conn->query($addExpenseSQL);
     // $addExpense = $addExpenseResult->fetch(PDO::FETCH_ASSOC);    
 }
@@ -168,6 +168,7 @@
                     <td class="amount__budgeted" data-value="<?php  echo($Items['Amount']);?>">₦ <?php  echo($Items['Amount']);?></td>
                     <td class="amount__expended" >₦ <?php  echo($Items['expense']);?></td>
                     <!-- <td><button type="button" onclick="return enterExpense('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Enter Amount Expended</button></td> -->
+                    <td><button type="button" onclick="return deleteRow('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Update Expense</button></td>
                 </tr>
                 <?php }while($Items =$result->fetch(PDO::FETCH_ASSOC))?>
             </tbody>
