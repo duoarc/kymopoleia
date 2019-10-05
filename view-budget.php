@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/popup.css">
     <script src="https://kit.fontawesome.com/833e0cadb7.js" crossorigin="anonymous"></script>
     <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
     
@@ -168,17 +169,29 @@
                     <td class="amount__budgeted" data-value="<?php  echo($Items['Amount']);?>">₦ <?php  echo($Items['Amount']);?></td>
                     <td class="amount__expended" >₦ <?php  echo($Items['expense']);?></td>
                     <!-- <td><button type="button" onclick="return enterExpense('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Enter Amount Expended</button></td> -->
-                    <td><button type="button" onclick="return deleteRow('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Update Expense</button></td>
+                    <td><button type="button" onclick="openForm()" class="btn btn-primary">Update Expense</button></td>
                 </tr>
                 <?php }while($Items =$result->fetch(PDO::FETCH_ASSOC))?>
             </tbody>
             </table>
             <input type="hidden" name="hidden" id="hidden" class="form-control" >
-            <a type="button" href="addBudgetItems.php" class="btn btn-success" id="add-row"><i class="fa fa-plus"></i> Update/Add Budget
-                                Item</a>
+            <a type="button" href="addBudgetItems.php" class="btn btn-success" id="add-row"><i class="fa fa-plus"></i> Update/Add Budget Item</a>
         </div>
         </section>
+        <div class="form-popup" id="updateExpense">
+          <form action="/action_page.php" class="form-container">
+            <h1>Expense</h1>
 
+            <label for="expense"><b>Amount Spent</b></label>
+            <input type="text" placeholder="Enter Amount in Naira" name="expense" required>
+
+            <!-- <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required> -->
+
+            <a href="" ><button type="submit" class="btn">Enter</button></a>
+            <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+          </form>
+        </div>
     </div>
     </main>
 
@@ -200,6 +213,14 @@
  </script>  
    <!-- END SIDEBAR MENU -->
    <script>
+
+    function openForm() {
+  document.getElementById("updateExpense").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("updateExpense").style.display = "none";
+}
 
   function deleteRow(r) {
         console.log(r);
