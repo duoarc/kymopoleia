@@ -165,8 +165,8 @@
                     </td>
                     <td width="100px" data-value="526"><?php  echo($Items['description']);?></td>
                     <td data-value=""><?php  echo($Items['Priority']);?></td>
-                    <td class="amount__budgeted" data-value="<?php  echo($Items['Amount']);?>">₦<?php  echo($Items['Amount']);?></td>
-                    <td class="amount__expended" contenteditable >₦ </td>
+                    <td class="amount__budgeted" data-value="<?php  echo($Items['Amount']);?>">₦ <?php  echo($Items['Amount']);?></td>
+                    <td class="amount__expended" >₦ <?php  echo($Items['expense']);?></td>
                     <!-- <td><button type="button" onclick="return enterExpense('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Enter Amount Expended</button></td> -->
                 </tr>
                 <?php }while($Items =$result->fetch(PDO::FETCH_ASSOC))?>
