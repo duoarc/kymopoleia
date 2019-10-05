@@ -281,6 +281,15 @@
  </script>  
    <!-- END SIDEBAR MENU -->
    <script>
+        function openForm() {
+  document.getElementById("updateExpense").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("updateExpense").style.display = "none";
+}
+
+    
   function deleteRow(r) {
         console.log(r);
         var v = r;
