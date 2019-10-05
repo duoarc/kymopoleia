@@ -28,7 +28,13 @@
     $result2 = $conn->query($sql2);
     $Budget = $result2->fetch(PDO::FETCH_ASSOC);
     $_SESSION['Amount'] = $Budget['Amount'];
-}   
+
+
+    // $addExpenseSQL = "ALTER BudgetDetails ADD Expense int(255)";
+    // $addExpenseResult = $conn->query($addExpenseSQL);
+    // $addExpense = $addExpenseResult->fetch(PDO::FETCH_ASSOC);    
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,6 +154,7 @@
                 <th>Priority</th>
                 <th>Amount Budgeted</th>
                 <th>Amount Expended</th>
+                <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -159,7 +166,8 @@
                     <td width="100px" data-value="526"><?php  echo($Items['description']);?></td>
                     <td data-value=""><?php  echo($Items['Priority']);?></td>
                     <td class="amount__budgeted" data-value="<?php  echo($Items['Amount']);?>">₦<?php  echo($Items['Amount']);?></td>
-                    <td class="amount__expended" contenteditable="true" >₦ </td>
+                    <td class="amount__expended" contenteditable >₦ </td>
+                    <!-- <td><button type="button" onclick="return enterExpense('<?php echo($Budgets['Budget_id']); ?>')" class="btn btn-primary">Enter Amount Expended</button></td> -->
                 </tr>
                 <?php }while($Items =$result->fetch(PDO::FETCH_ASSOC))?>
             </tbody>
@@ -191,6 +199,7 @@
  </script>  
    <!-- END SIDEBAR MENU -->
    <script>
+
   function deleteRow(r) {
         console.log(r);
         var v = r;
@@ -209,6 +218,11 @@
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("main").style.marginLeft = "0";
+    }
+    /* Set amount expended */
+    function enterExpense() {
+        document.getElementById("amountExpended")
+
     }
  </script> 
  
