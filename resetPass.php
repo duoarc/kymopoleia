@@ -3,15 +3,15 @@ ob_start();
 session_start();
 $errors = $passError = $emailError = "";
 require_once('./PHP/database.php');
- if(!isset($_GET['email'])){
-         header("Location: login.php");
+ if(!isset($_GET['email'] && $_GET['token'])){
+         header("Location: forgotPass.php");
     }else{ 
-        $_SESSION['email'] = $_GET['email'];
-		$email	= $_SESSION['email'];
-        /* $sql = "SELECT * FROM users WHERE email = '$email'";
+        $email	= $_GET['email'];
+        $token	= $_GET['token'];
+        $sql = "SELECT * FROM users WHERE email='$email' AND token='$token'";
         $result = $conn->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC);
-		$user_id = $row["user_id"]*/;		
+		$user_id = $row["user_id"];		
 } 		
 
 if (isset($_POST['reset-password'])) {
@@ -35,7 +35,7 @@ else if ($password !== $confirmPassword){
 } else if ($password == $confirmPassword){
     $password = $_POST['password'];
     $passHash = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "UPDATE users SET password = '$passHash' WHERE email='$email' LIMIT 1";
+    $sql = "UPDATE users SET password = '$passHash' WHERE user_id='$user_id' LIMIT 1";
     $result = $conn->query($sql);
 	if ($result){
 		$okmessage = "Password Reset was successful! You can now Sign In with your new password";

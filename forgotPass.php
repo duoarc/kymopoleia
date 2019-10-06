@@ -22,18 +22,48 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
     
     if($checkEmail) {
 
-        header("Location: resetPass.php?email=$email");
+                $token = md5(rand(0,1000) );
+                $sql = "UPDATE users SET token = '$token' WHERE email='$email' LIMIT 1";
+                $result = $conn->query($sql);
 
-        /* $to = $email;
+                /*
+                //the following php mail function works fine on 000webhost.com //
+                $to = $email;
 				$subject = "KymoBudget Password Reset";
 				$body = "Please click on the link below or paste it into your browser to start the process of changing your password:" . "\n" .
-						"https://kymobudget.herokuapp.com/resetPass.php?email=$email";
-				$headers = 'From: "KymoBudget App" <noreply@kymobudget.ng>';						
+						"https://kymobudget.herokuapp.com/resetPass.php?email=$email&token=$token";
+				$headers = 'From: "KymoBudget App" <ooolalere2015@gmail.com>';						
 	
 				mail ($to, $subject, $body, $headers);
 				
-				$okmessage = "Please check your email for the link to reset your password.";
-        */
+                $okmessage = "Please check your email for the link to reset your password (You may need to check your spam/junk folder). ";
+                */
+
+                require 'phpmailer/PHPMailerAutoload.php';
+                $mail = new PHPMailer;
+                $mail->isSMTP();
+                $mail->Host='smtp.gmail.com';
+                //$mail->Host = "ssl://smtp.gmail.com";
+                $mail->port=587;
+                $mail->SMTPAuth=true;
+                $mail->SMTPSecure='tls';
+                $mail->Username='oolalere2019@gmail.com';
+                $mail->Password='#Itis2019';
+                $mail->setFrom('oolalere2019@gmail.com', 'Kymobudget');
+                $mail->addAddress($email);
+                $mail->addReplyTo('noreply@gmail.com');
+                $mail->isHTML(true);
+                $mail->Subject='KymoBudget Reset Password';
+                $mail->Body = "Please click on the link below or paste it into your browser to start the process of changing your password:" . "\n" .
+                                "https://kymobudget.herokuapp.com/resetPass.php?email=$email&token=$token";
+                if (!$mail->send()) {
+                echo "Message could not be sent!";
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+                }else{
+                    $okmessage = "Please check your email for the link to reset your password.";
+                }
+                
+        
 			}else if (!empty($email)){
 			
 				$okmessage = "No active user account exists for the email address you entered. Please enter an existing user email address.";
